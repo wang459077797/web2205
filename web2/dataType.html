@@ -8,14 +8,25 @@
   </head>
   <body>
     <script>
-      var n = Number(123)
-      console.log(n)
-      console.log(n.toString())
-      console.log([1, 2, 3])
-      console.log([1, 2, 3].toString())
-      console.log(String([1, 2, 3, 4]))
-      parseFloat
-      parseInt
+      // var n = Number(123)
+      // console.log(n)
+      // console.log(n.toString())
+      // console.log([1, 2, 3])
+      // console.log([1, 2, 3].toString())
+      // console.log(String([1, 2, 3, 4]))
+      // parseFloat
+      // parseInt
+      var arr = [7, 3, 4, 5, 6, 2, 1]
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = i + 1; j < arr.length; j++) {
+          console.log(arr)
+          if (arr[i] > arr[j]) {
+            var temp = arr[i] //temp = 7
+            arr[i] = arr[j] //arr[i] = 3
+            arr[j] = temp //arr[j] = 7
+          }
+        }
+      }
     </script>
   </body>
 </html>

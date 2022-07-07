@@ -14,7 +14,7 @@
 // console.log(str4.substr(5,2)) //截取字符串 // 下标 长度
 // console.log(str4.substring(5,7)) //截取字符串);  //下标 下标
 // var str = 'abcEFaGa'
-// console.log(str.toUpperCase()) //转换为大写);
+// console.log(str.toUpperCase()) //转换为大写);S
 // console.log(str.toLowerCase()) //转换为小写);
 // console.log(str.repeat(5)) //复制字符串次数
  
