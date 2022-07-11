@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+  </body>
+  <script>
+    var students = [
+      {
+        name: '张三',
+        birthday: '2000-03-12 12:12:12',
+        sex: '男',
+        height: '175cm',
+        weight: '60kg',
+      },
+      {
+        name: '李四',
+        birthday: '2001-02-15 15:15:15',
+        sex: '男',
+        height: '172cm',
+        weight: '117g',
+      },
+      {
+        name: '王五',
+        birthday: '1999-12-16 16:16:16',
+        sex: '男',
+        height: '178cm',
+        weight: '62kg',
+      },
+      {
+        name: '老6',
+        birthday: '2002-02-12 12:12:12',
+        sex: '男',
+        height: '169cm',
+        weight: '55kg',
+      },
+      {
+        name: '小七',
+        birthday: '2000-11-2 2:2:2',
+        sex: '女',
+        height: '165cm',
+        weight: '105g',
+      },
+      {
+        name: '朱八',
+        birthday: '2001-06-12 6:6:6',
+        sex: '男',
+        height: '175cm',
+        weight: '60kg',
+      },
+      {
+        name: '九妹',
+        birthday: '2000-01-12',
+        sex: '女',
+        height: '158cm',
+        weight: '46kg',
+      },
+    ]
+
+    // 1. 找出数组中 最大的年龄和最小的年龄 的名字打印出名字和年龄 （14）
+    // 2. 下列数组按照年龄排序打印出名字和年龄 （14）
+    // 3. 统计数组中男生女生各多少人数（14）
+    // 4. 统计数组中身高大于170的人数（14）
+    // 5. 使用正则表达式将数组中体重是g单位的转换为kg 打印出数组（14）
+    // 6. 将数组按照体重进行排序，输出名字和相对应的体重 从低到高（14）
+    // 7. 实现随机点名功能 每次随机输出一个名字（14）
+    // * 注： 不可在原数组上直接手动修改数据
+    // * 满分100分 7*14==98 剩余2分看心情给
+    //通过生日获取年龄
+    function getAge(date) {
+      return new Date().getFullYear() - new Date(date).getFullYear()
+    }
+    var res = students.map(function (n) {
+      return {
+        name: n.name,
+        age: getAge(n.birthday),
+      }
+    })
+    res.sort(function (a, b) {
+      return a.age - b.age
+    })
+    console.log('第一题：')
+    console.log('年龄最小的是：' + res[0].name, res[0].age + '岁')
+    console.log(
+      '年龄最大的是：' + res[res.length - 1].name,
+      res[res.length - 1].age + '岁'
+    )
+    console.log('-------------------------------------------------')
+    console.log('第二题：')
+    for (let i in res) {
+      console.log(res[i].name, res[i].age)
+    }
+    console.log('-------------------------------------------------')
+    console.log('第三题')
+    var nan = students.filter(function (item) {
+      return item.sex == '男'
+    })
+    console.log(
+      '女生数量：' + (students.length - nan.length),
+      '男生数量：' + nan.length
+    )
+    console.log('----------------------------------------------------')
+    console.log('第四题')
+    var gt170 = students.filter(function (item) {
+      return Number(item.height.replace('cm', '')) > 170
+    })
+    console.log('身高大于170的人数：' + gt170.length)
+    console.log('----------------------------------------------------')
+    console.log('第五题')
+    var kg = students.map(function (item, index) {
+      if (!/kg/.test(item.weight)) {
+        students[index].weight = Number(item.weight.replace('g', '')) / 2 + 'kg'
+      }
+    })
+    console.log(students)
+    console.log('----------------------------------------------------')
+    console.log('第六题')
+    students.sort(function (a, b) {
+      let aa = Number(a.weight.replace('kg', ''))
+      let bb = Number(b.weight.replace('kg', ''))
+      return aa - bb
+    })
+    console.log(students)
+
+    console.log('----------------------------------------------------')
+    console.log('第七题')
+    var random = Math.floor(Math.random() * students.length)
+    console.log(students[random].name)
+  </script>
+</html>
