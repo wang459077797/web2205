@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul onclick="fun()">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+    <div onclick="fun()">
+      <div id="box">1</div>
+      <div id="box1">2</div>
+      <div id="box2">3</div>
+      <h1>h1</h1>
+      <span>span</span>
+      <p>p</p>
+      <button>按钮</button>
+    </div>
+    <button id="btn">新增</button>
+  </body>
+  <script>
+    function fun() {
+      if (event.target.nodeName == 'LI') {
+        event.target.style.background = 'red'
+      }
+      if (event.target.nodeName == 'DIV') {
+        event.target.style.background = 'blue'
+      }
+      if (event.target.nodeName == 'BUTTON') {
+        event.target.style.background = 'green'
+      }
+    }
+    btn.onclick = function () {
+      document.getElementsByTagName('ul')[0].innerHTML += '<li>新增</li>'
+    }
+  </script>
+</html>
