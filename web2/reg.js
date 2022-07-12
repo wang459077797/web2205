@@ -46,11 +46,11 @@
 // console.log(res)
 //说明：$1,$2上就是按顺序对应小括号里面的小正则 捕获到的内容。
 
-var reg = /foo/g
-console.log(/foo/g.test('foo'))
-console.log(/foo/g.test('foo'))
-console.log(/foo/g.test('foo'))
-console.log(/foo/g.test('foo'))
+// var reg = /foo/g
+// console.log(/foo/g.test('foo'))
+// console.log(/foo/g.test('foo'))
+// console.log(/foo/g.test('foo'))
+// console.log(/foo/g.test('foo'))
 // console.log(reg.test('foo')) //true
 // console.log(reg.test('foo')) //false
 // console.log(reg.test('foo')) //true
@@ -64,3 +64,37 @@ console.log(/foo/g.test('foo'))
 // 2. 可以每次使用不同的正则对象例如
 //     /foo/g.test("foo") //true
 //     /foo/g.test("foo") //true
+
+//用逗号分隔数字将 “100000000”这样的数字处理成100,000,000
+// var str = '100000000'
+// var reg = /(\d{1,3})/g
+// var res = str.replace(reg, '$1,')
+// res = res.substring(0, res.length - 1)
+// console.log(res)
+// 正则表达式获取url参数:  var a = 'html?a=1&b=2'
+// var a = 'html?a=1&b=2'
+// var reg = /\?(.*)/
+// var res = reg.exec(a)
+// console.log(res)
+// res = res[1].split('&')
+// console.log(res)
+// 17.将字符串中小写数字转换成数组中大写数字
+// var str = 'a1351s29分d8的765c啊4'
+// var ary = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+// var reg = /\d/g
+// var res = str.replace(reg, function (item) {
+//   return ary[item]
+// })
+// // console.log(res)
+// 18.数组去重 将"aaaaaabbbbbbbccccccc"转化为"abc"
+// var str = 'aaaaaabbbbbbbccccccc'
+// var reg = /(\w)\1+/g
+// var res = str.replace(reg, function (item) {
+//   return item[0]
+// })
+// console.log(res)
+// 21.匹配用尖括号括起来的以a开头的字符串 <a href="222">
+var str = '<a href="222">'
+var reg = /<a\s+href="(.*?)">/
+var res = reg.exec(str)
+console.log(res)

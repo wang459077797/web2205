@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 300px;
+        height: 300px;
+        background: #ccc;
+        border: 1px solid rgb(172, 63, 63);
+        float: left;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 300px;
+      }
+      li {
+        float: left;
+        width: 24.3%;
+        height: 30px;
+        text-align: center;
+        background: #ccc;
+        border: 1px solid rgb(172, 63, 63);
+      }
+      li:hover {
+        cursor: pointer;
+      }
+      li:first-child {
+        background: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <button>隐藏</button>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div> -->
+    <!-- <div>
+      <ul>
+        <li onclick="fun(this)">标签1</li>
+        <li onclick="fun(this)">标签2</li>
+        <li onclick="fun(this)">标签3</li>
+        <li onclick="fun(this)">标签4</li>
+      </ul>
+      <div id="box">标签1内容</div>
+    </div> -->
+    <ul>
+      <li
+        draggable="true"
+        ondragenter="dragEnter(event)"
+        ondragend="myFunction(event)"
+      >
+        列表1
+      </li>
+      <li
+        draggable="true"
+        ondragenter="dragEnter(event)"
+        ondragend="myFunction(event)"
+      >
+        列表2
+      </li>
+      <li
+        draggable="true"
+        ondragenter="dragEnter(event)"
+        ondragend="myFunction(event)"
+      >
+        列表3
+      </li>
+    </ul>
+  </body>
+  <script>
+    var liCon = ''
+    //拖拽时触发
+    function dragEnter(e) {
+      //拖拽的元素
+      liCon = e.target
+    }
+    //松开拖拽鼠标时触发
+    function myFunction(e) {
+      var con = e.target.innerHTML //目标元素内容
+      e.target.innerHTML = liCon.innerHTML //将拖拽的内容赋值给目标元素
+      liCon.innerHTML = con //将目标元素的内容赋值给拖拽的元素
+    }
+    // function fun(obj) {
+    //   var con = obj.innerHTML //获取当前点击的标签的内容
+    //   document.getElementById('box').innerHTML = con + '内容' //把点击的标签内容 放进div里面
+    //   var liObj = document.querySelectorAll('li') //找到所有的li标签
+    //   for (let i = 0; i < liObj.length; i++) {
+    //     liObj[i].style.background = '#ccc' //循环所有的li 吧背景色变成灰色
+    //   }
+    //   obj.style.background = 'yellow' //最后把你点击的变成黄色
+    // }
+
+    // btn.onclick = function () {
+    //   var box = document.getElementById('box')
+    //   box.style = 'width:800px;height:800px;transition: all 5s;'
+    // }
+
+    // setInterval(function () {
+    //   var times = new Date()
+    //   box.innerHTML = times.toLocaleTimeString()
+    // })
+
+    // var flag = true
+    // document.querySelector('button').onclick = function () {
+    //   if (flag) {
+    //     this.innerHTML = '显示'
+    //   } else {
+    //     this.innerHTML = '隐藏'
+    //   }
+    //   var divObj = document.getElementsByTagName('div')
+    //   for (let i = 0; i < divObj.length; i++) {
+    //     if (flag) {
+    //       divObj[i].style.display = 'none'
+    //     } else {
+    //       divObj[i].style.display = 'block'
+    //     }
+    //   }
+    //   flag = !flag
+    // }
+  </script>
+</html>

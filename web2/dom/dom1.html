@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .myimg {
+        width: 500px;
+        height: 500px;
+        box-shadow: 0 0 10px #000;
+      }
+    </style>
+  </head>
+  <body onresize="fun()">
+    <!-- <div id="box">box0</div>
+    <div id="box1">box1</div>
+    <span></span>
+    <div class="box">class box</div>
+    <div>div标签</div>
+    <div class="box"></div>
+    <div name="abc"></div>
+    <img
+      src="https://img10.360buyimg.com/n7/jfs/t1/96989/12/16552/306595/5e7db7c7Eabe8f733/96d4ae520fcb4f41.jpg"
+      title="空空***"
+    />
+    <button>点击</button>
+    <button ondblclick="fun()">点击</button>
+    <button id="btn">我是按钮</button> -->
+    <!-- <input type="text" value="123" id="username" onchange="fun()" />
+    <select name="" id="scroe">
+      <option value="100">阳光</option>
+      <option value="80">阳光2</option>
+      <option value="90">阳光3</option>
+      <option value="95">阳光4</option>
+    </select> -->
+    <!-- <form action="" onsubmit="fun()">
+      <input type="text" id="username" />
+      <input type="submit" value="提交" />
+    </form> -->
+    <button onmousedown="fun()">按钮</button>
+    <input type="text" onselect="fun()" />
+    <div style="height: 100px; width: 200px; overflow: auto" onscroll="fun()">
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+      <h1>123</h1>
+    </div>
+  </body>
+  <script>
+    function fun() {
+      console.log(event)
+      // if (username.value == '') {
+      //   alert('用户名不能为空')
+      //   return false
+      // }
+      // console.log('正常')
+      // return true
+      // console.log('我是提交事件')
+      // alert('成功')
+      // var val = (document.getElementById('username').value = '456')
+      // console.log(val)
+    }
+    // scroe.onchange = function () {
+    //   var val = this.value //获取选中的值
+    //   var optionObj = document.getElementsByTagName('option') //找到所以的option标签
+    //   for (let i = 0; i < optionObj.length; i++) {
+    //     //遍历所有的option标签
+    //     if (optionObj[i].value == val) {
+    //       //如果循环到某个标签的值和 选中的相等
+    //       console.log(optionObj[i].innerHTML)
+    //       optionObj[i].innerHTML = '我是选中的' //把选中的标签的内容改成我是选中的
+    //     }
+    //   }
+    // }
+    // document.onload = function () {
+    //   alert('加载完成1')
+    // }
+    // window.onload = function () {
+    //   alert('加载完成2')
+    // }
+    // document.querySelectorAll('button')[0].onclick = function () {
+    //   alert(6666)
+    // }
+    // btn.onclick = function () {
+    //   alert(8888)
+    // }
+    // function funload() {
+    //   alert('加载完成')
+    // }
+    // //通过ID 去找到一个唯一节点
+    // console.log(document.getElementById('box1'))
+    // document.getElementById('box1').innerHTML = 'box1修改'
+    // //通过标签名 找到一组节点
+    // var divObjs = document.getElementsByTagName('div')
+    // divObjs[divObjs.length - 1].innerHTML = '我是最后一个'
+    // console.log(document.getElementsByTagName('div'))
+    // //通过类名 找到一组节点
+    // var divObjs = document.getElementsByClassName('box')
+    // divObjs[0].innerText = '<h1>我是通过类名找到的</h1>'
+    // divObjs[1].innerHTML = '<h1 style="color:red;">我是通过类名找到的</h1>'
+    // divObjs[1].innerHTML = divObjs[1].innerHTML + divObjs[1].innerHTML
+    // console.log(divObjs[1].innerHTML, '***')
+    // function fun() {
+    //var imgObj = document.getElementsByTagName('img')[0]
+    // imgObj.src =
+    //   'https://img10.360buyimg.com/n7/jfs/t1/155186/20/24466/186622/62b6ccb1Ef30986dc/768796ff9b6e3d74.jpg'
+    // imgObj.width = '500'
+    // imgObj.height = '500'
+    // imgObj.title = '我是提示'
+    // imgObj.style = 'width:500px;height:500px;box-shadow:0 0 10px #000;'
+    //  imgObj.className = 'myimg'
+    //   }
+  </script>
+</html>
