@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    用户名:<input type="text" name="username" id="username" /> 年龄:<input
+      type="text"
+      name="age"
+      id="age"
+    />
+    性别: <input type="text" id="sex" />
+    <button id="btn">添加</button>
+    <table border="1" style="width: 500px">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+  <script>
+    var data = []
+    window.onload = function () {
+      btn.onclick = function () {
+        var username = document.getElementById('username').value
+        var age = document.getElementById('age').value
+        var sex = document.getElementById('sex').value
+        if (!username || !age || !sex) {
+          alert('输入信息不能为空')
+          return
+        }
+        data.unshift({
+          username: username,
+          age: age,
+          sex: sex,
+        })
+        showList()
+      }
+    }
+    function showList() {
+      var html = ''
+      for (let i in data) {
+        html += `<tr>
+                    <td>${data[i].username}</td>
+                    <td>${data[i].age}</td>
+                    <td>${data[i].sex}</td>
+                    <td><a href="#" onclick="showDetail(${i})">查看</a> <a href="#" onclick="del(${i})">删除</a></td>
+                </tr>`
+      }
+      document.getElementsByTagName('tbody')[0].innerHTML = html
+    }
+    function del(index) {
+      data.splice(index, 1)
+      showList()
+    }
+    function showDetail(index) {
+      alert(data[index].username + data[index].sex + data[index].age)
+    }
+  </script>
+</html>
