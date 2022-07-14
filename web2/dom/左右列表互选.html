@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        position: relative;
+      }
+      #left {
+        width: 300px;
+        height: 500px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+      }
+
+      #jiantou {
+        display: inline-block;
+        width: 31px;
+        height: 50px;
+        position: absolute;
+        left: 331px;
+        top: 213px;
+      }
+      #right {
+        width: 300px;
+        height: 500px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        position: absolute;
+        top: 20px;
+        left: 377px;
+      }
+      button {
+        margin-top: 20px;
+      }
+      ul {
+        list-style: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="left">
+      <p style="width: 300px; border-bottom: 1px solid #ccc">
+        <input type="checkbox" id="leftAll" /> 列表一
+      </p>
+      <ul>
+        <li><input type="checkbox" name="leftli" /> 列表1</li>
+        <li><input type="checkbox" name="leftli" /> 列表2</li>
+        <li><input type="checkbox" name="leftli" /> 列表3</li>
+        <li><input type="checkbox" name="leftli" /> 列表4</li>
+        <li><input type="checkbox" name="leftli" /> 列表5</li>
+        <li><input type="checkbox" name="leftli" /> 列表6</li>
+      </ul>
+    </div>
+    <div id="jiantou">
+      <button id="rightbtn">>></button>
+      <button id="leftbtn"><<</button>
+    </div>
+    <div id="right">
+      <p style="width: 300px; border-bottom: 1px solid #ccc">
+        <input type="checkbox" id="rightAll" /> 列表二
+      </p>
+      <ul>
+        <li><input type="checkbox" name="rightli" /> 列表7</li>
+        <li><input type="checkbox" name="rightli" /> 列表8</li>
+        <li><input type="checkbox" name="rightli" /> 列表9</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      leftAllSelect()
+      rightAllSelect()
+      document.getElementById('rightbtn').onclick = leftToRight
+      document.getElementById('leftbtn').onclick = rightToLeft
+    }
+
+    function rightToLeft() {
+      var rLi = document.getElementsByName('rightli')
+      var lefUL = document.getElementsByTagName('ul')[0]
+      var rightUl = document.getElementsByTagName('ul')[1]
+      for (var i = 0; i < rLi.length; i++) {
+        if (rLi[i].checked) {
+          //如果是选中状态的li 就吧他从右边移动到左边
+          // <li><input type="checkbox" name="rightli" /> 列表7</li>
+          let liObj = document.createElement('li')
+          let inpObj = document.createElement('input')
+          inpObj.type = 'checkbox'
+          inpObj.name = 'leftli'
+          liObj.appendChild(inpObj)
+          liObj.innerHTML += rLi[i].parentNode.innerText
+          lefUL.appendChild(liObj)
+          rightUl.removeChild(rLi[i].parentNode)
+          i--
+        }
+      }
+      document.getElementById('rightAll').checked = false
+    }
+    function leftToRight() {
+      //找到左边选中的项
+      var lli = document.getElementsByName('leftli')
+      var rightUlObj = document.getElementsByTagName('ul')[1]
+      var leftUlObj = document.getElementsByTagName('ul')[0]
+      var leftAllLi = leftUlObj.children
+      for (let i = 0; i < lli.length; i++) {
+        if (lli[i].checked) {
+          var liObj = document.createElement('li')
+          var inp = document.createElement('input')
+          inp.type = 'checkbox'
+          inp.name = 'rightli'
+          liObj.appendChild(inp)
+          liObj.innerHTML += lli[i].parentNode.innerText //内容
+          leftUlObj.removeChild(leftAllLi[i])
+          i--
+          rightUlObj.appendChild(liObj)
+        }
+      }
+      document.getElementById('leftAll').checked = false
+    }
+    function rightAllSelect() {
+      var rightAll = document.getElementById('rightAll') //先找全选复选框 对象
+      var rightli = document.getElementsByName('rightli') //找到所有的子复选框对象
+      rightAll.addEventListener('change', function () {
+        //值改变事件
+        for (let i = 0; i < rightli.length; i++) {
+          rightli[i].checked = this.checked //把全选的 选中状态 赋值给所有的子复选框
+        }
+      })
+      for (let i = 0; i < rightli.length; i++) {
+        rightli[i].onchange = function () {
+          if (!this.checked) {
+            rightAll.checked = false
+            return
+          }
+          for (let i = 0; i < rightli.length; i++) {
+            if (!rightli[i].checked) {
+              rightAll.checked = false
+              return
+            }
+          }
+          rightAll.checked = true
+        }
+      }
+    }
+    function leftAllSelect() {
+      var leftAll = document.getElementById('leftAll') //先找全选复选框 对象
+      var leftli = document.getElementsByName('leftli') //找到所有的子复选框对象
+      leftAll.addEventListener('change', function () {
+        //值改变事件
+        for (let i = 0; i < leftli.length; i++) {
+          leftli[i].checked = this.checked //把全选的 选中状态 赋值给所有的子复选框
+        }
+      })
+      for (let i = 0; i < leftli.length; i++) {
+        leftli[i].onchange = function () {
+          if (!this.checked) {
+            leftAll.checked = false
+            return
+          }
+          for (let i = 0; i < leftli.length; i++) {
+            if (!leftli[i].checked) {
+              leftAll.checked = false
+              return
+            }
+          }
+          leftAll.checked = true
+        }
+      }
+    }
+  </script>
+</html>
