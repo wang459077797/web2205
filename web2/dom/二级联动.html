@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <select name="" id="provice">
+        <option value="">请选择</option>
+      </select>
+      <select name="" id="area">
+        <option value="">请选择</option>
+      </select>
+    </div>
+  </body>
+  <script>
+    var data = [
+      {
+        name: '北京市',
+        children: ['东城区', '西城区', '朝阳区', '丰台区', '石景山区'],
+      },
+      {
+        name: '郑州市',
+        children: ['中原区', '金水区', '二七区', '管城回族区', '上街区'],
+      },
+    ]
+    window.onload = function () {
+      var s = document.getElementById('provice')
+      for (let i in data) {
+        var op = document.createElement('option')
+        op.value = i
+        op.innerHTML = data[i].name
+        s.appendChild(op)
+      }
+
+      s.addEventListener('change', getarea)
+    }
+    function getarea() {
+      //   console.log(this.value)
+      var index = this.value
+      var area = document.getElementById('area')
+      if (area.children.length > 1) {
+        while (area.children.length > 1) {
+          area.removeChild(area.children[1])
+        }
+      }
+      for (let i in data[index].children) {
+        // var op = document.createElement('option')
+        // op.value = i
+        // op.innerHTML = data[index].children[i]
+        // area.appendChild(op)
+        // html += `<option></option>`
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <input type="text" id="nowtime" /><button id="start">开始</button
+      ><button id="stop">停止</button>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      document.getElementById('start').addEventListener('click', start)
+    }
+    var arr = []
+    function start() {
+      var inp = document.getElementById('nowtime')
+
+      var n = setInterval(function () {
+        var timer = new Date()
+        var hours = timer.getHours()
+        var minutes = timer.getMinutes()
+        var seconds = timer.getSeconds()
+        inp.value = hours + ':' + minutes + ':' + seconds
+      }, 1000)
+      arr.push(n)
+      document.getElementById('stop').addEventListener('click', stop)
+    }
+    function stop() {
+      console.log(arr)
+      for (let i in arr) {
+        clearInterval(arr[i])
+      }
+      clearInterval(n)
+    }
+  </script>
+</html>
