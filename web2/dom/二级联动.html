@@ -48,11 +48,10 @@
         }
       }
       for (let i in data[index].children) {
-        // var op = document.createElement('option')
-        // op.value = i
-        // op.innerHTML = data[index].children[i]
-        // area.appendChild(op)
-        // html += `<option></option>`
+        var op = document.createElement('option')
+        op.value = i
+        op.innerHTML = data[index].children[i]
+        area.appendChild(op)
       }
     }
   </script>
