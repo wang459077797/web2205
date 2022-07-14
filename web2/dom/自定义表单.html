@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 300px;
+        height: 500px;
+        border: 1px solid #000;
+        float: left;
+        margin-left: 50px;
+        text-align: center;
+      }
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box1">
+      <h4>表单</h4>
+    </div>
+    <div id="box2">
+      <h4>表单元素</h4>
+      <button id="textFun">本文框</button>
+      <button id="selectFun">下拉框</button>
+      <button id="checkboxFun">多选框</button>
+      <button id="radioFun">单选框</button>
+      <button id="textareaFun">本文域</button>
+    </div>
+    <select name="" id="">
+      <option value=""></option>
+    </select>
+  </body>
+  <script>
+    window.onload = function () {
+      document.getElementById('textFun').onclick = textFun
+      document.getElementById('selectFun').onclick = selectFun
+      checkboxFun.onclick = checkboxFun
+      radioFun.onclick = radioFun
+      textareaFun.onclick = textareaFun
+    }
+    //生产下拉框
+    function selectFun() {
+      var pobj = document.createElement('p')
+      pobj.innerHTML = '下拉框:'
+      var obj = document.createElement('select')
+      var op = document.createElement('option')
+      op.innerHTML = '请选择'
+      obj.appendChild(op)
+      pobj.appendChild(obj)
+      box1.appendChild(pobj)
+    }
+    //生成文本框
+    function textFun() {
+      var txt = document.createElement('label')
+      txt.innerHTML = '文本:'
+      var obj = document.createElement('input')
+      obj.type = 'text'
+      obj.placeholder = '请输入文本'
+      var box1 = document.getElementById('box1')
+      txt.appendChild(obj)
+      box1.appendChild(txt)
+    }
+  </script>
+</html>
