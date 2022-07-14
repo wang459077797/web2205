@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <input type="checkbox" name="" id="all" /> 全选 <br />
+      <input type="checkbox" name="fruit" />香蕉
+      <input type="checkbox" name="fruit" />苹果
+      <input type="checkbox" name="fruit" />西瓜
+      <input type="checkbox" name="fruit" />葡萄
+      <input type="checkbox" name="fruit" />梨子
+      <input type="checkbox" name="fruit" />石榴
+    </div>
+  </body>
+  <script>
+    var all = document.getElementById('all') //先找全选复选框 对象
+    var fruit = document.getElementsByName('fruit') //找到所有的子复选框对象
+    all.addEventListener('change', function () {
+      //值改变事件
+      for (let i = 0; i < fruit.length; i++) {
+        fruit[i].checked = this.checked //把全选的 选中状态 赋值给所有的子复选框
+      }
+    })
+    for (let i = 0; i < fruit.length; i++) {
+      fruit[i].onchange = function () {
+        if (!this.checked) {
+          all.checked = false
+          return
+        }
+        for (let i = 0; i < fruit.length; i++) {
+          if (!fruit[i].checked) {
+            all.checked = false
+            return
+          }
+        }
+        all.checked = true
+      }
+    }
+  </script>
+</html>
