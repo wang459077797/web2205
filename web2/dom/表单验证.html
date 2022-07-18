@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    span {
+      color: #ccc;
+    }
+  </style>
+  <body>
+    <div id="box">
+      <!-- 用户名（只能是字母开头,由数字字母下划线组成） -->
+      <div>
+        用户名：<input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="请输入用户名"
+          value="admin12344"
+        />
+        <b></b>
+        <span>（只能是字母开头,由数字字母下划线组成）</span>
+      </div>
+      <div>
+        密&nbsp;&nbsp;&nbsp;码：<input
+          type="text"
+          name="pwd"
+          id="pwd"
+          placeholder="请输入密码"
+          value="123ASqwe"
+        />
+        <b></b>
+        <span>(不低于6位,必须包含数字和大小字母)</span>
+      </div>
+      <div>
+        确认密码：<input
+          type="text"
+          name="pwd"
+          id="repwd"
+          placeholder="请输入确认密码"
+          value="123ASqwe"
+        />
+        <b></b>
+        <span>(和密码保持一致)</span>
+      </div>
+      <div>
+        手机号：<input
+          type="text"
+          name="phone"
+          id="phone"
+          placeholder="请输入手机号"
+          value="13888888888"
+        />
+        <b></b>
+        <span>（符合手机号正则）</span>
+      </div>
+      <div>
+        姓 名：<input
+          type="text"
+          name="name"
+          id="names"
+          placeholder="请输入姓名"
+          value="张三"
+        />
+        <b></b>
+        <span>（必须是2-4位的中文）</span>
+      </div>
+      <div>
+        身份证号码：<input
+          type="text"
+          name="idcard"
+          id="idcard"
+          placeholder="请输入身份证号"
+          value="411336199010214567"
+        />
+        <b></b>
+        <span>（符合身份证正则）</span>
+      </div>
+      <button id="btn">提交</button>
+      <!--确认密码：和密码一致 手机号：
+       姓名： 必须是2-4位的中文 身份证号：符合身份证正则 -->
+    </div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>用户名</th>
+          <th>密码</th>
+          <th>确认密码</th>
+          <th>手机号</th>
+          <th>姓名</th>
+          <th>身份证</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+  <script>
+    var arr = [],
+      data = []
+    function showList() {
+      var strhtml = ''
+      for (let i in data) {
+        strhtml += `<tr>
+            <td>${data[i].username}</td>
+            <td>${data[i].pwd}</td>
+            <td>${data[i].repwd}</td>
+            <td>${data[i].phone}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].idcard}</td>
+            <td>
+                <a href="#" data="${i}">删除</a>
+                <a href="">修改</a>
+            </td>`
+      }
+      document.querySelector('tbody').innerHTML = strhtml
+    }
+
+    window.onload = function () {
+      document.querySelector('tbody').addEventListener('click', function (e) {
+        if (e.target.nodeName == 'A' && e.target.innerHTML == '删除') {
+          console.log()
+          var index = e.target.attributes.data.value
+          data.splice(index, 1)
+          showList()
+        }
+      })
+
+      btn.onclick = function () {
+        username.onblur()
+        pwd.onblur()
+        repwd.onblur()
+        phone.onblur()
+        names.onblur()
+        idcard.onblur()
+
+        var res = arr.every(function (item, index) {
+          if (item) {
+            return true
+          } else {
+            return false
+          }
+        })
+
+        if (!res) {
+          alert('请检查表单')
+          return false
+        }
+        var obj = {
+          username: username.value,
+          pwd: pwd.value,
+          repwd: repwd.value,
+          phone: phone.value,
+          name: names.value,
+          idcard: idcard.value,
+        }
+        data.unshift(obj)
+        showList()
+      }
+      //身份证号
+      var idcard = document.getElementById('idcard')
+      idcard.onblur = function () {
+        var reg =
+          /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+        if (reg.test(idcard.value)) {
+          arr.push(true)
+          idcard.nextElementSibling.innerHTML = '身份证号符合要求'
+          idcard.nextElementSibling.style.color = 'green'
+        } else {
+          arr.push(false)
+          idcard.nextElementSibling.innerHTML = '身份证号不符合要求'
+          idcard.nextElementSibling.style.color = 'red'
+        }
+      }
+      //姓名
+      var names = document.getElementById('names')
+      names.onblur = function () {
+        var reg = /^[\u4e00-\u9fa5]{2,4}$/
+        if (reg.test(names.value)) {
+          arr.push(true)
+          this.nextElementSibling.style.color = 'green'
+          names.nextElementSibling.innerHTML = '输入正确'
+        } else {
+          arr.push(false)
+          names.nextElementSibling.innerHTML = '姓名不符合规范'
+          this.nextElementSibling.style.color = 'red'
+        }
+      }
+      // 手机号
+      var phone = document.getElementById('phone')
+      phone.onblur = function () {
+        var reg = /^1[23456789]\d{9}$/
+        if (reg.test(this.value)) {
+          arr.push(true)
+          this.nextElementSibling.innerHTML = '手机号符合要求'
+          this.nextElementSibling.style.color = 'green'
+        } else {
+          arr.push(false)
+          this.nextElementSibling.innerHTML = '手机号不符合要求'
+          this.nextElementSibling.style.color = 'red'
+        }
+      }
+      //确认密码
+      var repwd = document.getElementById('repwd')
+      repwd.onblur = function () {
+        var pwd = document.getElementById('pwd').value
+        if (pwd != this.value) {
+          arr.push(false)
+          this.nextElementSibling.innerHTML = '两次密码不一致'
+          this.nextElementSibling.style.color = 'red'
+        } else {
+          arr.push(true)
+          this.nextElementSibling.innerHTML = '密码一致'
+          this.nextElementSibling.style.color = 'green'
+        }
+      }
+      //密码
+      var pwdObj = document.getElementById('pwd')
+      pwdObj.onblur = function () {
+        var reg = /\d/
+        var reg1 = /[a-z]/
+        var reg2 = /[A-Z]/
+        if (
+          reg.test(pwdObj.value) &&
+          reg1.test(pwdObj.value) &&
+          reg2.test(pwdObj.value) &&
+          pwdObj.value.length >= 6
+        ) {
+          arr.push(true)
+          pwdObj.nextElementSibling.innerHTML = '密码可用'
+          pwdObj.nextElementSibling.style.color = 'green'
+        } else {
+          arr.push(false)
+          pwdObj.nextElementSibling.innerHTML = '密码不可用'
+          pwdObj.nextElementSibling.style.color = 'red'
+        }
+      }
+      //用户名
+      var usernameObj = document.getElementById('username')
+      usernameObj.onblur = function () {
+        var reg = /^[a-zA-Z]\w{5,17}$/
+        if (reg.test(usernameObj.value)) {
+          arr.push(true)
+          usernameObj.nextElementSibling.style = 'color:green'
+          usernameObj.nextElementSibling.innerHTML = '√用户名格式正确'
+        } else {
+          arr.push(false)
+          usernameObj.nextElementSibling.style = 'color:red'
+          usernameObj.nextElementSibling.innerHTML = '*用户名格式错误'
+        }
+      }
+    }
+  </script>
+</html>

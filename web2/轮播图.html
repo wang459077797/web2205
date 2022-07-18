@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .jiantou {
+      width: 50px;
+      height: 60px;
+      background: #ccc;
+      opacity: 0.8;
+      line-height: 60px;
+      font-size: 26px;
+      cursor: pointer;
+    }
+    .left {
+      position: absolute;
+      left: 8px;
+      top: 40%;
+    }
+    .right {
+      position: absolute;
+      left: 460px;
+      top: 40%;
+    }
+  </style>
+  <body>
+    <div id="box">
+      <img src="" alt="" width="500" height="300" id="banner" />
+    </div>
+    <div class="jiantou left">←</div>
+    <div class="jiantou right">→</div>
+  </body>
+  <script>
+    var imgArr = [
+      'https://www.toopic.cn/public/uploads/image/20200413/20200413223125_26839.jpg',
+      'https://www.toopic.cn/public/uploads/small/1638860262874163886026265.jpg',
+      'https://www.toopic.cn/public/uploads/small/1642749121859164274912182.jpg',
+      'https://www.toopic.cn/public/uploads/small/164274883169716427488314.jpg',
+    ]
+    window.onload = function () {
+      var imgObj = document.getElementById('banner')
+      var index = 0
+      imgObj.src = imgArr[index]
+      setInterval(function () {
+        if (index >= imgArr.length - 1) {
+          index = 0
+          imgObj.src = imgArr[index]
+        } else {
+          imgObj.src = imgArr[++index]
+        }
+      }, 3000)
+
+      //左箭头事件
+      var leftObj = document.getElementsByClassName('left')[0]
+      leftObj.onclick = function () {
+        if (index <= 0) {
+          index = imgArr.length - 1
+          imgObj.src = imgArr[index]
+        } else {
+          imgObj.src = imgArr[--index]
+        }
+      }
+      //右箭头事件
+      var rightObj = document.getElementsByClassName('right')[0]
+      rightObj.onclick = function () {
+        if (index >= imgArr.length - 1) {
+          index = 0
+          imgObj.src = imgArr[index]
+        } else {
+          imgObj.src = imgArr[++index]
+        }
+      }
+    }
+  </script>
+</html>
