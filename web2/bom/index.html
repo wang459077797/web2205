@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <a href="#box2">2222222222</a>
+    <div id="box">第一个</div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <div id="box2" style="height: 500px; width: 300px; background: red">
+      111111122222222222222222211
+    </div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <div style="height: 500px; width: 300px; background: red">111111111</div>
+    <a href="#box">第一个div</a> -->
+    <button>点击跳转到百度</button>
+  </body>
+  <script>
+    document.getElementsByTagName('button')[0].onclick = function () {
+      window.history.go(-1)
+      //   window.location.reload()
+      //   window.location.href = 'http://www.baidu.com'
+      //   window.open('http://www.baidu.com')
+    }
+    //     console.log(window.innerHeight, window.innerWidth) //浏览器的可视窗口 高度 宽度
+
+    //     console.log(window.location.hash) //获取当前页面的url 锚点
+
+    // console.log(window.location.host) //获取当前主域名 包括端口
+
+    //   console.log(window.location.hostname) //获取当前主域名 不包括端口
+
+    //   console.log(window.location.href) // 设置或返回完整的 URL。
+
+    // console.log(window.location.port) // 设置或返回端口号
+
+    //   console.log(window.location.protocol) //获取传输协议
+
+    // console.log(window.location.search) //获取参数
+    // var params = window.location.search.substring(1).split('&')
+    // console.log(params[0].split('=')[1])
+
+    // window.location.reload() //刷新
+
+    // window.location.replace('../轮播图.html') //替换当前文档
+
+    // window.history.back() //前一个
+
+    // window.history.forward() //下一个
+
+    // window.history.go(0) //加载 history 列表中的某个具体页面。
+    console.log(window.screen.width)
+
+    console.log(window.screen.height) //当前分辨率
+
+    console.log(window.screen.availWidth)
+
+    console.log(window.screen.availHeight) //可用区域
+  </script>
+</html>
