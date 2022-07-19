@@ -31,6 +31,20 @@
       <option value="2">女</option>
     </select>
     <button id="sub">提交</button>
+    <br />
+    <div>
+      <select name="" id="keyword">
+        <option value="">请选择一个排序字段</option>
+        <option value="1">编号</option>
+        <option value="2">年龄</option>
+      </select>
+      <select name="" id="sorttype">
+        <option value="">请选择排序方式</option>
+        <option value="1">升序</option>
+        <option value="2">降序</option>
+      </select>
+      <button id="sort">排序</button>
+    </div>
     <table border="1" width="100%">
       <thead>
         <tr>
@@ -52,6 +66,38 @@
     window.onload = function () {
       document.getElementById('sub').onclick = addData
       document.getElementById('all').onchange = allCheck
+      document.getElementById('sort').onclick = sortData
+    }
+    function sortData() {
+      var keyword = document.getElementById('keyword').value
+      var type = document.getElementById('sorttype').value
+      if (keyword == 1) {
+        //编号的排序
+        arr.sort(function (a, b) {
+          if (type == 1) {
+            //从小到大
+            return a.id - b.id
+          }
+          if (type == 2) {
+            //从大到小
+            return b.id - a.id
+          }
+        })
+      }
+      if (keyword == 2) {
+        // 年龄的排序
+        arr.sort(function (a, b) {
+          if (type == 1) {
+            //从小到大
+            return a.age - b.age
+          }
+          if (type == 2) {
+            //从大到小
+            return b.age - a.age
+          }
+        })
+      }
+      showTable()
     }
     function allCheck() {
       var allStatus = this.checked
@@ -106,13 +152,35 @@
                         <td>${arr[i].age}</td>
                         <td>${arr[i].sex == 1 ? '男' : '女'}</td>
                         <td>
-                            <button>上移</button>
-                            <button>下移</button>
+                            <button onclick="upFun(${i})">上移</button>
+                            <button onclick="downFun(${i})">下移</button>
                             <button onclick="del(${i})">删除</button>
                         </td>
                     </tr>`
       }
       document.querySelector('tbody').innerHTML = strHtml
+    }
+
+    //上移
+    function upFun(index) {
+      if (index == 0) {
+        return
+      }
+      var tmp = arr[index]
+      arr[index] = arr[index - 1]
+      arr[index - 1] = tmp
+      showTable()
+    }
+    //下移
+    function downFun(index) {
+      console.log(123123)
+      if (index == arr.length - 1) {
+        return
+      }
+      var tmp = arr[index]
+      arr[index] = arr[+index + 1]
+      arr[+index + 1] = tmp
+      showTable()
     }
     function checkStatus(index) {
       arr[index].status = !arr[index].status
