@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    td {
+      text-align: center;
+    }
+    tbody tr:nth-child(even) {
+      background: pink;
+    }
+    tbody tr:nth-child(odd) {
+      background: yellow;
+    }
+    .overbg {
+      background: orange !important;
+    }
+  </style>
+  <body>
+    姓名：<input type="text" id="username" /> 年龄：<input
+      type="text"
+      id="age"
+    />
+    性别：<select name="" id="sex">
+      <option value="0">请选择一个性别</option>
+      <option value="1">男</option>
+      <option value="2">女</option>
+    </select>
+    <button id="sub">提交</button>
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>全选 <input type="checkbox" id="all" /></th>
+          <th>编号</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="box"></div>
+  </body>
+  <script>
+    var arr = [],
+      gid = 1
+
+    window.onload = function () {
+      document.getElementById('sub').onclick = addData
+      document.getElementById('all').onchange = allCheck
+    }
+    function allCheck() {
+      var allStatus = this.checked
+      console.log(arr)
+      arr.map(function (item) {
+        item.status = allStatus
+      })
+      showTable()
+    }
+    function mouseFun(obj, status) {
+      if (status) {
+        return
+      }
+      obj.classList.add('overbg')
+    }
+    function mouseoutFun(obj, status) {
+      if (status) {
+        return
+      }
+      obj.classList.remove('overbg')
+    }
+    function addData() {
+      var username = document.getElementById('username').value
+      var age = document.getElementById('age').value
+      var sex = document.getElementById('sex').value
+      var obj = {
+        status: false,
+        id: gid++,
+        name: username,
+        age: age,
+        sex: sex,
+      }
+      arr.push(obj)
+      showTable()
+    }
+    showTable()
+    function showTable() {
+      var strHtml = ''
+      for (let i in arr) {
+        strHtml += `<tr ${
+          arr[i].status ? 'style="background:green;"' : ''
+        }  onmouseover="mouseFun(this,${
+          arr[i].status
+        })" onmouseout="mouseoutFun(this,${arr[i].status})">
+                        <td>
+                            <input onchange="checkStatus(${i})" type="checkbox" ${
+          arr[i].status ? 'checked' : ''
+        } />
+                        </td>
+                        <td>${arr[i].id}</td>
+                        <td>${arr[i].name}</td>
+                        <td>${arr[i].age}</td>
+                        <td>${arr[i].sex == 1 ? '男' : '女'}</td>
+                        <td>
+                            <button>上移</button>
+                            <button>下移</button>
+                            <button onclick="del(${i})">删除</button>
+                        </td>
+                    </tr>`
+      }
+      document.querySelector('tbody').innerHTML = strHtml
+    }
+    function checkStatus(index) {
+      arr[index].status = !arr[index].status
+      showTable()
+    }
+    function del(index) {
+      arr.splice(index, 1)
+      showTable()
+    }
+  </script>
+</html>
