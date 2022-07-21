@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #box {
+      display: none;
+    }
+    .user {
+      border: 1px solid #000;
+      width: 300px;
+      height: 250px;
+      margin: auto;
+      text-align: center;
+    }
+    #userinfo {
+      display: none;
+    }
+  </style>
+  <body>
+    <div id="box" class="user">
+      <h3>用户注册</h3>
+
+      用户名：<input type="text" id="username" /> <br /><br />
+      密 码：<input type="text" id="pwd" /> <br /><br />
+      邮 箱：<input type="text" id="email" /><br /><br />
+      <button id="register">注 册</button>
+      <button id="showLogin">已有账户去登录</button>
+    </div>
+    <div id="logindiv" class="user">
+      <h3>登录</h3>
+      用户名：<input type="text" id="loginname" /> <br /><br />
+      密 码：<input type="text" id="loginpwd" /> <br /><br />
+      <button id="login">登 录</button>
+      <button id="reg">注 册 账 户</button>
+    </div>
+    <div id="userinfo">
+      <h3>已登录</h3>
+      <h6>
+        当前登录用户：<span id="userinfoname"></span> 用户id:
+        <span id="userinfoid"></span>
+      </h6>
+      <table border="1" width="800">
+        <thead>
+          <tr>
+            <th colspan="6">用户列表</th>
+          </tr>
+          <tr>
+            <th>id</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>邮箱</th>
+            <th>注册时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      //   showUserlist()
+      //给注册账户按钮绑定点击事件
+      document.getElementById('reg').onclick = showReg
+      document.getElementById('showLogin').onclick = showLogin
+      document.getElementById('register').onclick = register
+      document.getElementById('login').onclick = login
+    }
+
+    function ajax(type, url, func, data = null) {
+      var http = new XMLHttpRequest()
+      http.open(type, url, true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          func(JSON.parse(http.responseText))
+        }
+      }
+      if (type.toLowerCase() == 'post') {
+        http.setRequestHeader(
+          'Content-Type',
+          'application/x-www-form-urlencoded'
+        )
+        if (data) {
+          var str = ''
+          for (let i in data) {
+            str += i + '=' + data[i] + '&'
+          }
+          str = str.slice(0, -1)
+        }
+        http.send(str)
+      } else {
+        http.send()
+      }
+    }
+    //登录
+    function login() {
+      var username = document.getElementById('loginname').value
+      var pwd = document.getElementById('loginpwd').value
+
+      var data = {
+        username: username,
+        password: pwd,
+      }
+      console.log(data)
+      ajax(
+        'post',
+        'https://liu.zzgoodqc.cn/login',
+        function (res) {
+          console.log(res)
+          if (res.code == 200) {
+            alert('登录成功')
+            document.getElementById('logindiv').style.display = 'none'
+            document.getElementById('userinfoname').innerHTML = username
+            document.getElementById('userinfoid').innerHTML = res.id
+            document.getElementById('userinfo').style.display = 'block'
+            showUserlist()
+          } else {
+            alert(res.msg)
+          }
+        },
+        data
+      )
+    }
+    function showUserlist() {
+      ajax('get', 'https://liu.zzgoodqc.cn/users', function (res) {
+        console.log(res)
+        if (res.code == 200) {
+          let data = res.data
+          data.sort(function (a, b) {
+            return b.id - a.id
+          })
+          var str = ''
+          for (let i in data) {
+            str += `<tr>
+            <td>${data[i].id}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].password}</td>
+            <td>${data[i].email}</td>
+            <td>${data[i].created_at}</td>
+            <td><button onclick="catUserinfo(${data[i].id})">查看</button></td>
+          </tr>`
+          }
+          document.getElementsByTagName('tbody')[0].innerHTML = str
+          console.log(data)
+        } else {
+          alert(res.msg)
+        }
+      })
+    }
+    function catUserinfo(id) {
+      ajax('get', ' https://liu.zzgoodqc.cn/user/' + id, function (res) {
+        console.log(res)
+      })
+    }
+    //注册账户
+    function register() {
+      var username = document.getElementById('username').value
+      var pwd = document.getElementById('pwd').value
+      var email = document.getElementById('email').value
+      if (!username || !pwd || !email) {
+        alert('请填写完整信息')
+        return
+      }
+      var data = {
+        username: username,
+        password: pwd,
+        email: email,
+      }
+      ajax(
+        'post',
+        'https://liu.zzgoodqc.cn/register',
+        function (res) {
+          if (res.code == 200) {
+            alert('注册成功')
+            showLogin()
+          } else {
+            alert(res.msg)
+          }
+        },
+        data
+      )
+    }
+    //显示登录框
+    function showLogin() {
+      document.getElementById('logindiv').style.display = 'block'
+      document.getElementById('box').style.display = 'none'
+    }
+    //显示注册框
+    function showReg() {
+      document.getElementById('logindiv').style.display = 'none'
+      document.getElementById('box').style.display = 'block'
+    }
+  </script>
+</html>
