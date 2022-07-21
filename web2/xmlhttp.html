@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <button id="btn">点击</button>
+  </body>
+  <script>
+    btn.onclick = function () {
+      //创建ajax对象
+      var http = new XMLHttpRequest()
+      //设置请求的一些基本信息
+      http.open('get', 'url', true) //（请求方式,请求地址链接,异步同步）
+      //请求状态发生改变时触发
+      http.onreadystatechange = function () {
+        //判断状态 是否完成成功
+        if (http.readyState == 4 && http.status == 200) {
+          //..代码块 获取到响应结果 并且解析成json格式 处理dom逻辑
+          let data = JSON.parse(http.responseText)
+          //渲染dom...
+        }
+      }
+      //发送请求
+      http.send()
+    }
+
+    function postAjax() {
+      //创建ajax对象
+      var http = new XMLHttpRequest()
+      //设置请求的一些基本信息
+      http.open('post', 'url', true) //（请求方式,请求地址链接,异步同步）
+      //请求状态发生改变时触发
+      http.onreadystatechange = function () {
+        //判断状态 是否完成成功
+        if (http.readyState == 4 && http.status == 200) {
+          //..代码块 获取到响应结果 并且解析成json格式 处理dom逻辑
+          let data = JSON.parse(http.responseText)
+          //渲染dom...
+        }
+      }
+      //设置请求头部 发送的数据类型 可以是表单数据 也可以是json数据
+      http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      //发送请求
+      http.send('name=zhangsan&age=18')
+    }
+  </script>
+</html>

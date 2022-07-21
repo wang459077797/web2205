@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      用户名：<input type="text" id="username" />密码：<input
+        type="text"
+        id="pwd"
+      />
+      邮箱：<input type="text" id="email" />
+      <button id="btn">注册</button>
+    </div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+  <script>
+    // https://liu.zzgoodqc.cn/hello?times=1
+
+    function login() {
+      //   console.log('login')
+      var username = document.getElementById('username').value
+      var pwd = document.getElementById('pwd').value
+
+      var http = new XMLHttpRequest()
+      http.open('post', 'https://liu.zzgoodqc.cn/login', true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          console.log(http.responseText)
+        }
+      }
+      http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      var data = 'username=' + username + '&password=' + pwd
+      http.send(data)
+    }
+
+    function register() {
+      //   console.log('login')
+      var username = document.getElementById('username').value
+      var pwd = document.getElementById('pwd').value
+      var email = document.getElementById('email').value
+      var http = new XMLHttpRequest()
+      http.open('post', 'https://liu.zzgoodqc.cn/register', true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          console.log(http.responseText)
+        }
+      }
+      http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      var data = 'username=' + username + '&password=' + pwd + '&email=' + email
+      http.send(data)
+    }
+    window.onload = function () {
+      btn.onclick = login
+      var xhr = new XMLHttpRequest()
+      xhr.open('get', 'https://liu.zzgoodqc.cn/hello', true)
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          //   console.log(xhr.responseText)
+          let data = JSON.parse(xhr.responseText) //转换成对象数组
+          document.getElementsByTagName('th')[0].innerHTML = data.msg
+          console.log(data)
+          let htmlStr = ''
+          for (let i in data.data) {
+            htmlStr += ` <tr>
+                            <td>${+i + 1}</td>
+                            <td>${data.data[i].title}</td>
+                        </tr>`
+          }
+          document.getElementsByTagName('tbody')[0].innerHTML = htmlStr
+        }
+      }
+      xhr.send()
+    }
+
+    //     使用ajax进行登录：
+
+    // 2个输入框 一个登录按钮
+
+    // 提交字段有 username , password
+
+    // 正确得用户名：web2112 密码：jiayou2112
+
+    // 接口地址： https://liu.zzgoodqc.cn/login  POST方法请求
+  </script>
+</html>
