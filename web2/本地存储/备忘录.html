@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    ul {
+      list-style: none;
+    }
+    li {
+      width: 200px;
+      height: 30px;
+      line-height: 30px;
+      border-bottom: 1px solid #ccc;
+      padding-left: 10px;
+    }
+    .x {
+      color: red;
+      cursor: pointer;
+      font-size: 22px;
+    }
+    .dui {
+      color: green;
+      cursor: pointer;
+      font-size: 22px;
+    }
+  </style>
+  <body>
+    输入内容： <input type="text" id="con" /> <button id="add">添加</button>
+    <ul>
+      <!-- <li>1. <input type="checkbox" />我今天要学习 <span>×</span></li> -->
+    </ul>
+    <div id="box"></div>
+  </body>
+  <!-- 1. 先写html -- 输入框 + 按钮 列表项 序号.复习框+文本 + 操作按钮 -->
+  <!-- 2. 点击输入框 把输入框中的内容 放到列表中 -->
+  <!-- 3. 内容显示在列表中 -->
+  <!-- 4. 确定序号 设置序号 -->
+  <!-- 5. 本地存储数据 使页面数据一直保存   存 取 -->
+  <!-- 用户第一次进来 本地存储 肯定是没数据的 -->
+  <!-- 用户第一次之后进来 本地存储 有可能有数据有可能没有 -->
+  <!-- 存的情况  取的情况 -->
+
+  <script>
+    var index = localStorage.getItem('index') ? Number(localStorage.index) : 1 //序号
+    window.onload = function () {
+      add.onclick = addfun
+      showList()
+    }
+    function addfun() {
+      let con = document.getElementById('con').value
+      //把数据存储到本地
+      let data = {
+        text: con,
+        id: index++,
+        status: 0, //0是未完成 1是完成 2是取消
+      }
+      //肯定是数组
+      // 文本 序号 勾选框 是否勾选
+      //   localStorage.setItem('mylist', JSON.stringify(data))
+      localStorage.setItem('index', index)
+      addData('mylist', data)
+      showList()
+    }
+    function addData(key, value) {
+      // 存数据第一步 一定先看需求 , 设置数据 就是追加 还是修改 删除 是要全部覆盖
+      //第一步 要先是否有数据？ 有的情况下取出数据 ,没有数据的情况下创建数据
+      let data = getData(key)
+      data.push(value)
+      localStorage.setItem(key, JSON.stringify(data))
+    }
+    function showList() {
+      //得有数据 去哪找数据？ 本地存储里面找数据
+      //   console.log(localStorage.getItem('mylist'))
+      // 数据转换成对象
+      let data = getData('mylist')
+      //循环数组
+      //   document.getElementsByTagName('ul')[0].innerHTML = ''
+      var str = ''
+      for (let i in data) {
+        str += `<li`
+        str += data[i].status == 2 ? ` style="color:#ccc"` : ''
+        str += data[i].status == 1 ? ' style="background:green" >' : '>'
+        str += data[i].status == 2 ? '<del>' : ''
+        str += data[i].id + `.`
+        str += `<input type="checkbox"  ${
+          data[i].status == 1 ? 'checked' : ''
+        } onchange="changeStatus(this,${i})" />`
+        str += data[i].text + (data[i].status == 2 ? '</del>' : '')
+        str +=
+          data[i].status == 2
+            ? `<span class="dui" onclick="open1(${i})">√</span>`
+            : `<span class="x" onclick="off(${i})">×</span>`
+        str += `</li>`
+      }
+      document.getElementsByTagName('ul')[0].innerHTML = str
+    }
+    function open1(index) {
+      let data = getData('mylist')
+      data[index].status = 0
+      localStorage.setItem('mylist', JSON.stringify(data))
+      showList()
+    }
+    function off(index) {
+      let data = getData('mylist')
+      data[index].status = 2
+      localStorage.setItem('mylist', JSON.stringify(data))
+      showList()
+    }
+
+    function changeStatus(obj, index) {
+      //   console.log(obj, index)
+      let data = getData('mylist')
+      data[index].status = obj.checked ? 1 : 0
+      localStorage.setItem('mylist', JSON.stringify(data))
+      showList()
+    }
+    function getData(key) {
+      return localStorage.getItem(key)
+        ? JSON.parse(localStorage.getItem(key))
+        : []
+      //   if (localStorage.getItem(key)) {
+      //     return JSON.parse(localStorage.getItem(key))
+      //   } else {
+      //     return []
+      //   }
+    }
+  </script>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    ul {
+      list-style: none;
+    }
+  </style>
+  <body>
+    备忘录：<input type="text" id="con" /> <button id="add">添加</button>
+    <ul id="mylist"></ul>
+  </body>
+  <script>
+    window.onload = function () {
+      showList()
+      add.onclick = function () {
+        var con = document.getElementById('con').value
+        var li = document.createElement('li')
+        var inp = document.createElement('input')
+        inp.type = 'checkbox'
+        //获取长度
+        var len = localStorage.getItem('list')
+          ? JSON.parse(localStorage.getItem('list')).length
+          : 1
+
+        console.log(len)
+        li.appendChild(document.createTextNode(+len + 1 + '.'))
+        li.appendChild(inp)
+        li.appendChild(document.createTextNode(con))
+        document.getElementById('mylist').appendChild(li)
+        setData(con)
+      }
+
+      document.getElementById('mylist').onclick = function (e) {
+        console.log(e.target.nodeName)
+        if (e.target.nodeName == 'LI') {
+          var inp = e.target.getElementsByTagName('input')[0]
+          inp.checked = !inp.checked
+          if (inp.checked) {
+            e.target.style.color = 'green'
+          } else {
+            e.target.style.color = ''
+          }
+        }
+        if (e.target.nodeName == 'INPUT') {
+          var inp = e.target
+          var li = inp.parentNode
+          if (inp.checked) {
+            li.style.color = 'green'
+          } else {
+            li.style.color = ''
+          }
+        }
+
+        let list = JSON.parse(localStorage.getItem('list'))
+        let index = inp.attributes.index.value
+        list[index].status = inp.checked ? 1 : 0
+        localStorage.setItem('list', JSON.stringify(list))
+      }
+    }
+    function getdate() {
+      var date = new Date()
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var day = date.getDate()
+      var hour = date.getHours()
+      var minute = date.getMinutes()
+      var second = date.getSeconds()
+      return (
+        year +
+        '-' +
+        month +
+        '-' +
+        day +
+        ' ' +
+        hour +
+        ':' +
+        minute +
+        ':' +
+        second
+      )
+    }
+    function setData(val) {
+      var obj = {
+        con: val,
+        status: 0, //1代表已完成 2已取消 0待完成
+        time: getdate(),
+      }
+      if (localStorage.getItem('list')) {
+        var list = JSON.parse(localStorage.getItem('list')) //转换成json数组对象的格式
+        list.push(obj)
+        localStorage.setItem('list', JSON.stringify(list))
+      } else {
+        var list = []
+        list.push(obj)
+        localStorage.setItem('list', JSON.stringify(list))
+      }
+    }
+
+    function showList() {
+      var list = localStorage.getItem('list')
+      if (list) {
+        list = JSON.parse(list)
+        let str = ''
+        for (let i in list) {
+          str += `<li style="${list[i].status == 1 ? 'color:green' : ''}">${
+            +i + 1
+          }.<input type="checkbox" ${
+            list[i].status == 1 ? 'checked' : ''
+          } index="${i}">${
+            list[i].con
+          } <button>取消任务</button><button>恢复任务</button></li>`
+        }
+        document.getElementById('mylist').innerHTML = str
+      }
+    }
+  </script>
+</html>

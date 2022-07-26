@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        height: 100%;
+        background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      }
+
+      .fu {
+        width: 800px;
+        margin: 0 auto;
+      }
+
+      .tian {
+        width: 800px;
+        margin: 0 auto;
+      }
+
+      .tou {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      .shang {
+        vertical-align: top;
+      }
+
+      .nei {
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid #000;
+      }
+
+      input {
+        width: 300px;
+        height: 30px;
+        margin: 20px 0;
+        background-color: #ccc;
+        border: 1px solid rgb(134, 131, 131);
+      }
+
+      #liuyanneirong {
+        background-color: #ccc;
+        border: 1px solid rgb(134, 131, 131);
+      }
+
+      #btn {
+        width: 200px;
+        height: 50px;
+        background: linear-gradient(
+          to right,
+          #03a9f4,
+          #f441a5,
+          #ffeb3b,
+          #09a8f4
+        );
+        background-size: 400%;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        color: white;
+      }
+
+      #btn:hover {
+        background: linear-gradient(
+          to right,
+          #03a9f4,
+          #f441a5,
+          #ffeb3b,
+          #09a8f4
+        );
+        background-size: 400%;
+        animation: streamer 8s infinite;
+        cursor: pointer;
+      }
+
+      @keyframes streamer {
+        100% {
+          background-position: -400% 0;
+        }
+      }
+
+      h4 {
+        display: inline-block;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        margin-left: 30px;
+      }
+
+      .tian1 {
+        padding: 10px 0 50px;
+        position: relative;
+        border-bottom: 2px solid #000;
+        overflow: hidden;
+      }
+
+      .pp {
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+        margin-bottom: 10px;
+      }
+
+      .sj {
+        color: #f441a5;
+        font-size: 14px;
+      }
+
+      a {
+        text-decoration: none;
+        margin-left: 5px;
+        color: green;
+      }
+
+      a:hover {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="fu">
+      <div class="tou">
+        <h1>留言板</h1>
+        标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：<input
+          type="text"
+          name=""
+          id="biaoti"
+        /><br />
+        <span class="shang">留言内容：</span>
+        <textarea name="" id="liuyanneirong" cols="41" rows="10"> </textarea
+        ><br />
+        留&nbsp;&nbsp;言&nbsp;&nbsp;人：<input
+          type="text"
+          name=""
+          id="liuyanren"
+        /><br />
+        <button id="btn">发布留言</button>
+      </div>
+      <div class="nei">
+        <h2>留言列表</h2>
+      </div>
+    </div>
+    <div class="tian">
+      <div class="tian1">
+        <h4>留言人：</h4>
+        <span>色色色得瑟得瑟</span>
+        <br />
+
+        <h4>留言标题：</h4>
+        <span>色色色得瑟得瑟</span>
+        <br />
+
+        <h4>留言内容：</h4>
+        <br />
+        <span>色色色得瑟得瑟</span>
+
+        <p class="pp">
+          <span class="sj">留言时间：2020-01-01 12:12:12</span
+          ><a href="#">删除</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // 添加
+      document.getElementById('btn').onclick = fin
+      function fin() {
+        let title = document.getElementById('liuyanneirong')
+        let name = document.getElementById('liuyanren')
+        let content = document.getElementById('biaoti')
+        let data = {
+          title: title.value,
+          name: name.value,
+          content: content.value,
+        }
+        Ajax(
+          'post',
+          'https://liu.zzgoodqc.cn/lyb/add',
+          function (res) {
+            if (res.code == 200) {
+              alert('添加成功')
+              fun()
+            }
+          },
+          data
+        )
+      }
+
+      // 删除
+      function del(shanc) {
+        Ajax(
+          'get',
+          `https://liu.zzgoodqc.cn/lyb/del?id=${shanc}`,
+          function (res) {
+            fun()
+          }
+        )
+      }
+
+      // 留言列表
+      function fun() {
+        Ajax('get', 'https://liu.zzgoodqc.cn/lyb/list', function (res) {
+          let data = res.data
+          let divHTML = ''
+          let div = document.getElementsByClassName('tian')[0]
+          data.sort(function (a, b) {
+            return b.id - a.id
+          })
+          for (var i = 0; i < data.length; i++) {
+            let tr = `
+                    <div class="tian1">
+                        <h4>留言人：</h4>
+                        <span>${data[i].name}</span>
+                        <br>
+                        <h4>留言标题：</h4>
+                        <span>${data[i].title}</span>
+                        <br>
+                        <h4>留言内容：</h4><br>
+                        <span>${data[i].content}</span>
+                        <p class="pp"><span class="sj">留言时间：${data[i].created_at}</span><a href="#" onclick='del(${data[i].id})'>删除</a></p>
+                        </div>
+                    `
+            divHTML += tr
+          }
+          div.innerHTML = divHTML
+        })
+      }
+      fun()
+
+      function Ajax(type, url, fun, data = null) {
+        var http = new XMLHttpRequest()
+        http.open(type, url, true)
+        http.onreadystatechange = function () {
+          if (http.status == 200 && http.readyState == 4) {
+            fun(JSON.parse(http.responseText))
+          }
+        }
+        if (type.toLowerCase() == 'post') {
+          http.setRequestHeader(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+          )
+          if (data) {
+            var str = ''
+            for (let i in data) {
+              str += i += '=' + data[i] + '&'
+            }
+            str = str.slice(0, -1)
+          }
+          http.send(str)
+        } else {
+          http.send()
+        }
+      }
+    </script>
+  </body>
+</html>

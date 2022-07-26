@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div style="float: left">
+      <script type="text/html" style="display: block">
+        <img
+          src="https://img.zcool.cn/community/0169ec5ca46bb8a8012141685daea4.jpg@1280w_1l_2o_100sh.jpg"
+          alt=""
+        />
+      </script>
+      <br />
+      <script type="text/html" style="display: block">
+        <img
+          src="https://pic1.zhimg.com/v2-8d5ebb4f0fa67e76cbdd3c468f596e98_r.jpg"
+          alt=""
+        /><br />
+      </script>
+      <br />
+      <script type="text/html" style="display: block">
+        <img
+          src="https://www.euweb.cn/wp-content/uploads/2016/12/341413-106.jpg"
+          alt=""
+        />
+      </script>
+      <br />
+    </div>
+    <div id="box">
+      <h3>留言板</h3>
+      标题：<input type="text" id="title" /><br /><br />
+      留言内容：<br />
+      <textarea name="" id="content" cols="30" rows="10"></textarea><br /><br />
+      留言人： <input type="text" id="name" /><br /><br />
+      <button id="fabu" onclick="tianjia()">发布留言</button>
+    </div>
+    <div style="width: 150px; height: 45px; margin: 20px auto">
+      <h3>留言列表</h3>
+    </div>
+    <div id="liuyanliebiao"></div>
+  </body>
+  <script>
+    function fun() {
+      var http = new XMLHttpRequest()
+      http.open('get', 'https://liu.zzgoodqc.cn/lyb/list', true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          let data = JSON.parse(http.responseText)
+          var html = ''
+          var arr = data.data.reverse()
+          data.data.map((res) => {
+            html += `<div id="liuyanneirong">
+                                <b>留言人：</b><span id="name">${res.name}</span><br><br>
+                                <b>留言标题：</b><span id="title">${res.title}</span><br><br>
+                                <b>留言内容：</b><span id="content">${res.content}</span><br><br>
+                                <p  id="shijian"><span>留言时间：${res.created_at}</span>&emsp;<button onclick="shanchu(${res.id})">删除</button></p> 
+                            </div>`
+          })
+          document.getElementById('liuyanliebiao').innerHTML = html
+        }
+      }
+      http.send()
+    }
+    fun()
+    function tianjia() {
+      var http = new XMLHttpRequest()
+      http.open('post', 'https://liu.zzgoodqc.cn/lyb/add', true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          let data = JSON.parse(http.responseText)
+          console.log(data)
+          document.getElementById('title').value = ''
+          document.getElementById('name').value = ''
+          document.getElementById('content').value = ''
+          fun()
+        }
+      }
+      var title = document.getElementById('title').value
+      var name = document.getElementById('name').value
+      var content = document.getElementById('content').value
+      http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      http.send(`content=${content}&name=${name}&title=${title}`)
+    }
+
+    function shanchu(id) {
+      var http = new XMLHttpRequest()
+      http.open('get', `https://liu.zzgoodqc.cn/lyb/del?id=${id}`, true)
+      http.onreadystatechange = function () {
+        if (http.readyState == 4 && http.status == 200) {
+          let data = JSON.parse(http.responseText)
+          fun()
+          alert('删除成功')
+        }
+      }
+      http.send()
+    }
+  </script>
+  <style>
+    #box {
+      width: 300px;
+      height: 400px;
+      margin: auto;
+      margin-bottom: 150px;
+    }
+
+    #fabu {
+      width: 100px;
+      height: 40px;
+      margin: auto;
+      margin-left: 70px;
+    }
+
+    #liuyanneirong {
+      position: relative;
+      width: 500px;
+      height: 250px;
+      border: 1px solid #000;
+      margin: auto;
+    }
+
+    img {
+      width: 150px;
+      height: 50px;
+    }
+
+    #shijian {
+      position: absolute;
+      top: 190px;
+      left: 180px;
+    }
+  </style>
+</html>

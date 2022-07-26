@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <a href="/web2/b.html">阿萨德撒大</a>
+    <button onclick="fun()">删除</button>
+  </body>
+  <script>
+    document.cookie =
+      'username=John Doe; expires=Thu, 18 Dec 2043 12:00:00 GMT; path=/' //设置
+    document.cookie = 'pwd=bbbbbb' //设置
+    document.cookie =
+      'username=asjkhdkjashd; expires=Thu, 18 Dec 2033 12:00:00 GMT; path=/'
+    document.cookie = 'username=李四; path=/'
+    document.cookie = 'username=王五; path=/'
+    var val = document.cookie //获取
+    console.log(val)
+    function fun() {
+      document.cookie =
+        'username=; expires=Thu, 18 Dec 2021 12:00:00 GMT; path=/'
+    }
+  </script>
+</html>
